@@ -1,0 +1,39 @@
+﻿@model Scam_Reporting_Portal.Models.ScamReport
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Scam Report Details</h2>
+
+<div>
+    <strong>Title:</strong> @Model.Title <br />
+    <strong>Description:</strong> @Model.Description <br />
+    <strong>Location:</strong> @Model.Location <br />
+    <strong>UserName:</strong> @Model.User.Name <br />
+    <strong>Status:</strong> @Model.Status <br />
+    <strong>CreatedAt:</strong> @Model.CreatedAt <br />
+    <strong>ReviewedAt:</strong> @Model.ReviewedAt <br />
+    <strong>Reviewed By:</strong> @Model.ReviewedBy <br />
+</div>
+
+@if (Model.Status == 2)
+{
+    <div class="alert alert-danger">
+        <p>Your report has been rejected. You may revise and resubmit it.</p>
+        <a href="@Url.Action("Create", "Reports", new { id = Model.Id })" class="btn btn-warning">Resubmit Report</a>
+    </div>
+}
+else if (Model.Status == 1)
+{
+    <div class="alert alert-success">
+        <p>Your report has been approved. Thank you!</p>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <p>Your report is currently under review.</p>
+    </div>
+}
+
+<a href="@Url.Action("Index", "Reports")" class="btn btn-secondary">Back to Reports</a>

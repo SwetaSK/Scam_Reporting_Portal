@@ -1,0 +1,20 @@
+CREATE TABLE ScamReports (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Title NVARCHAR(200) NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    Location NVARCHAR(200),
+    UserId INT NOT NULL,
+    Status INT NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    ReviewedAt DATETIME,
+    ReviewedBy NVARCHAR(100)
+);
+
+
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    Password NVARCHAR(100) NOT NULL,
+    Role NVARCHAR(20) NOT NULL
+);

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Scam_Reporting_Portal.Models.ScamReport>
+
+<h2 class="text-center text-primary mb-4">Scam Reports</h2>
+
+<p class="text-center">
+    Welcome <strong>@Session["UserName"]</strong> (@Session["Role"])
+</p>
+
+@if (Session["Role"]?.ToString() != "Admin")
+{
+    <div class="text-center mb-4">
+        <a href="@Url.Action("Create","Reports")" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Report a Scam
+        </a>
+    </div>
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped shadow-sm">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        foreach (var r in Model)
+                        {
+                            <tr>
+                                <td>@r.Title</td>
+                                <td>
+                                    @if (r.Status == 0)   // Pending
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else if (r.Status == 1)   // Resolved
+                                    {
+                                        <span class="badge bg-success">Approved</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Rejected</span>
+                                    }
+
+                                </td>
+                                <td>@r.CreatedAt.ToLocalTime().ToString("dd-MMM-yyyy hh:mm tt")</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Reports", new { id = r.Id })" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No reports found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
